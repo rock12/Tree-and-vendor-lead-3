@@ -1,0 +1,99 @@
+# inherit from the proprietary version
+-include vendor/wiko/rainbow/BoardConfigVendor.mk
+
+
+# board
+TARGET_BOARD_PLATFORM := mt6582
+TARGET_NO_BOOTLOADER := true
+TARGET_ARCH := arm
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_ARCH_VARIANT_CPU := cortex-a7
+ARCH_ARM_HAVE_VFP := true
+ARCH_ARM_HAVE_NEON := true
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_SMP := true
+TARGET_CPU_VARIANT := cortex-a7
+DEVICE_RESOLUTION := 540x960
+
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_MTK := true
+BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/wiko/rainbow/bluetooth
+
+# MTK hacks for hw
+# TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
+# NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+# TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+# VSYNC_EVENT_PHASE_OFFSET_NS := -5000000
+# SF_VSYNC_EVENT_PHASE_OFFSET_NS := -5000000
+# PRESENT_TIME_OFFSET_FROM_VSYNC_NS := 0
+
+# blob hacks Flags
+# COMMON_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
+# COMMON_GLOBAL_CFLAGS += -DMR1_AUDIO_BLOB
+# COMMON_GLOBAL_CFLAGS += -DMR0_AUDIO_BLOB
+# COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
+
+# Flags
+TARGET_GLOBAL_CFLAGS   += -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
+
+# Deodex
+WITH_DEXPREOPT := false
+DISABLE_DEXPREOPT := true
+
+# EGL settings
+BOARD_EGL_CFG := device/wiko/rainbow/rootdir/configs/egl.cfg
+USE_OPENGL_RENDERER := true
+
+TARGET_BOOTLOADER_BOARD_NAME := rainbow
+
+TARGET_USERIMAGES_USE_EXT4:=true
+TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
+
+BOARD_KERNEL_CMDLINE :=console=ttyMT0,921600n1 vmalloc=496M slub_max_order=0 lcm=0-otm9605_qhd_xyl_rjk301 fps=5944 bootprof.pl_t=8751 bootprof.lk_t=1906 printk.disable_uart=1 boot_reason=4 rgk_memname=KMN5X000ZM_B209
+BOARD_KERNEL_BASE := 0x10000000
+BOARD_KERNEL_PAGESIZE := 2048
+
+# make_ext4fs requires numbers in dec format
+BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 943718400
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 968884224
+BOARD_FLASH_BLOCK_SIZE := 131072
+
+BOARD_SEPOLICY_DIRS := \
+       device/wiko/rainbow/sepolicy
+
+BOARD_SEPOLICY_UNION := \
+       device.te \
+       app.te \
+       system.te \
+       file_contexts
+
+TARGET_PREBUILT_KERNEL := device/wiko/rainbow/kernel
+TARGET_RECOVERY_FSTAB := device/wiko/rainbow/recovery.fstab
+
+BOARD_HAS_NO_SELECT_BUTTON := true
+
+BOARD_CUSTOM_BOOTIMG_MK := device/wiko/rainbow/bootimg.mk
+BOARD_MKBOOTIMG_ARGS := --board 1336460062
+
+TARGET_KMODULES := true
+
+BOARD_RIL_CLASS := ../../../device/wiko/rainbow/ril/
+
+BOARD_CONNECTIVITY_VENDOR := MediaTek
+BOARD_CONNECTIVITY_MODULE := conn_soc
+
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_mt66xx
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_mt66xx
+WIFI_DRIVER_FW_PATH_PARAM:="/dev/wmtWifi"
+WIFI_DRIVER_FW_PATH_STA:=STA
+WIFI_DRIVER_FW_PATH_AP:=AP
+WIFI_DRIVER_FW_PATH_P2P:=P2P
